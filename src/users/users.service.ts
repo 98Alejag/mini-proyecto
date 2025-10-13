@@ -30,9 +30,13 @@ export class UsersService {
 
   return users;
   }
-  create(newUser: CreateUserDTO) {
-    const userCreated = this.usersRepo.create(newUser);
-    return this.usersRepo.save(userCreated);
+  async create(newUser: CreateUserDTO) {
+    const hashedPassword = await bcrypt.hash(newUser.password, 10);
+    const userCreated = this.usersRepo.create({
+      ...newUser, password: hashedPassword,
+    });
+    await this.usersRepo.save(userCreated);
+    return{userCreated}
   }
   async update(id: number, updatedUser: UpdateUserDTO) {
     const hashedPassoword = await bcrypt.hash(updatedUser.password, 10)
@@ -45,6 +49,6 @@ export class UsersService {
       throw new NotFoundException(`Product with id ${id} not found`);
     userRemoved.status = false;
     await this.usersRepo.save(userRemoved);
-    return { message: `Product with id ${id} disable successfully`}
+    return { message: `User with id ${id} disable successfully`}
   }
 }

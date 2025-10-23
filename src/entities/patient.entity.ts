@@ -1,15 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { IsNotEmpty, IsEmail, MinLength, IsOptional} from "class-validator";
-
-export type Roles = 'admin' | 'doctor'
-
-export enum RolesEnum {
-    ADMIN = 'admin',
-    DOCTOR = 'doctor'
-}
+import { IsNotEmpty, IsEmail, MinLength } from "class-validator";
 
 @Entity()
-export class User {
+export class Patient {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -23,17 +16,21 @@ export class User {
   email: string;
 
   @Column({ nullable: false })
-  @IsNotEmpty({ message: 'La contraseña es obligatoria' })
-  @MinLength(6, { message: 'La contraseña debe tener al menos 6 caracteres' })
-  password: string;
+  @IsNotEmpty({ message: 'El numero es obligatoria' })
+  @MinLength(10, { message: 'El numero de teléfono debe tener al menos 10 numeros' })
+  phone: string;
 
   @Column({ nullable: true })
-  @IsOptional()
-  age?: number;
+  @IsNotEmpty({ message: 'La edad es obligatoria' })
+  age: number;
+
+  @Column({ nullable: true })
+  @IsNotEmpty({ message: 'La Direccion es obligatoria' })
+  address: string;
 
   @Column({ default: true })
   status: boolean;
 
-  @Column({default: RolesEnum.DOCTOR})
-  role: RolesEnum;
+  @Column ({default: 'Patient'})
+  role: string;
 }

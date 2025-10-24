@@ -1,3 +1,3 @@
-import { CreateAppoinmentDTO } from "./create-appoinment.dto";
+import { CreateAppointmentDTO } from "./create-appoinment.dto";
 
-export class UpdateApoinmenttDTO extends CreateAppoinmentDTO {}
+export class UpdateApoinmentDTO extends CreateAppointmentDTO {}

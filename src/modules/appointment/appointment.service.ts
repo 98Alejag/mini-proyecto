@@ -2,7 +2,6 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateAppointmentDTO } from 'src/dto/create-appoinment.dto';
 import { Appointment } from 'src/entities/appointment.entity';
-import { Patient } from 'src/entities/patient.entity';
 import { Treatment } from 'src/entities/treatment.entity';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -14,14 +13,12 @@ export class AppointmentService {
     private readonly appointmentRepo: Repository<Appointment>,
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
-    @InjectRepository(Patient)
-    private readonly patientRepo: Repository<Patient>,
     @InjectRepository(Treatment)
     private readonly treatmentRepo: Repository<Treatment>,
   ) {}
 
     async createAppointment(dto: CreateAppointmentDTO, currentUser: User, ): Promise<Appointment> {
-    const start = new Date(dto.date);
+    const start = new Date(dto.datehour);
     const hour = start.getHours();
 
     // Validar horario permitido
@@ -31,7 +28,7 @@ export class AppointmentService {
     }
 
     // Validar que el paciente sea el mismo si el usuario es paciente
-    if (currentUser.role === 'Patient' && dto.patientId !== currentUser.id) {
+    if (currentUser.role === 'patient' && dto.patientId !== currentUser.id) {
       throw new BadRequestException('No puedes agendar citas para otros pacientes');
     }
 
@@ -51,7 +48,7 @@ export class AppointmentService {
     }
 
     const doctor = await this.userRepo.findOne({ where: { id: dto.doctorId } });
-    const patient = await this.patientRepo.findOne({ where: { id: dto.patientId } });
+    const patient = await this.userRepo.findOne({ where: { id: dto.patientId } });
     const treatment = await this.treatmentRepo.findOne({ where: { id: dto.treatmentId } });
 
     if (!doctor || !patient || !treatment) {
@@ -59,7 +56,7 @@ export class AppointmentService {
     }
 
     const appointment = this.appointmentRepo.create({
-      date: dto.date,
+      datehour: dto.datehour,
       durationMinutes: dto.durationMinutes,
       doctor,
       patient,

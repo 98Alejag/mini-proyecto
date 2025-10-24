@@ -2,7 +2,6 @@ import * as dotenv from 'dotenv'
 import { User } from './src/entities/user.entity';
 import { DataSource } from 'typeorm'
 import { Treatment } from './src/entities/treatment.entity';
-import { Patient } from './src/entities/patient.entity';
 import { Appointment } from './src/entities/appointment.entity';
 
 
@@ -16,7 +15,7 @@ export default new DataSource({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    entities: [User, Treatment, Patient, Appointment],
+    entities: [User, Treatment, Appointment],
     migrations: ['./src/migrations/*.ts']
     
 });

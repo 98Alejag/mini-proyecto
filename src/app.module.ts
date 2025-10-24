@@ -6,8 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './modules/users/users.module';
 import { TreatmentModule } from './modules/Treatment/treatment.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { PatientModule } from './modules/patient/patient.module';
-import { AppointmentModule } from './modules/appointment/appointment.module';
+// import { AppointmentModule } from './modules/appointment/appointment.module';
 
 @Module({
   imports: [
@@ -29,8 +28,7 @@ import { AppointmentModule } from './modules/appointment/appointment.module';
     UsersModule,
     TreatmentModule,
     AuthModule,
-    PatientModule,
-    AppointmentModule,
+    // AppointmentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

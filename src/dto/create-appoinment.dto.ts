@@ -3,7 +3,7 @@ import { IsDateString, IsNotEmpty, IsNumber} from 'class-validator';
 export class CreateAppointmentDTO {
   @IsDateString()
   @IsNotEmpty()
-  date: Date;
+  datehour: Date;
 
   @IsNumber()
   @IsNotEmpty()

@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { IsNotEmpty, IsEmail, MinLength, IsOptional} from "class-validator";
+import { ClinicalHistory } from "./clinical-history.entity";
 
 export type Roles = 'admin' | 'doctor' | 'patient'
 
@@ -47,4 +48,7 @@ export class User {
 
   @Column({default: RolesEnum.PATIENT})
   role: RolesEnum;
+
+   @OneToMany(() => ClinicalHistory, (history) => history.patient)
+  clinicalHistories: ClinicalHistory[];
 }

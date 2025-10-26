@@ -90,18 +90,25 @@ export class AppointmentService {
     return this.appointmentRepo.save(appointment);
   }
 
-  async getAppointments(currentUser: User): Promise<Appointment[]> {
-  if (currentUser.role === 'patient') {
+  async getAppointments(currentUser: User, status?: string): Promise<Appointment[]> {
+    const whereConditions: any = {};
+    if (status) {
+      whereConditions.status = status;
+    }
+
+    if (currentUser.role === 'patient') {
+      whereConditions.patient = { id: currentUser.id };
+      return this.appointmentRepo.find({
+        where: whereConditions,
+        order: { datehour: 'ASC' },
+      });
+    }
+
+    // Admin y doctor ven todas
     return this.appointmentRepo.find({
-      where: { patient: { id: currentUser.id } },
+      where: whereConditions,
       order: { datehour: 'ASC' },
     });
   }
-
-  // Admin y doctor ven todas
-  return this.appointmentRepo.find({
-    order: { datehour: 'ASC' },
-  });
-}
 
 }

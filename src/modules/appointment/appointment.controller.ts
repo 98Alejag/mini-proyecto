@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { AppointmentService } from './appointment.service';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { CreateAppointmentDTO } from 'src/dto/create-appoinment.dto';
@@ -24,7 +24,18 @@ export class AppointmentController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin', 'doctor', 'patient')
   @Get()
-  async getAppointments(@CurrentUser() user: User) {
-    return this.appointmentService.getAppointments(user);
+  async getAppointments(
+    @Query('status') status: string,
+    @CurrentUser() user: User
+  ) {
+    if (status) {
+      const validStatuses = ['pendiente', 'confirmada', 'cancelada'];
+      if (!validStatuses.includes(status)) {
+        throw new Error('Invalid status value');
+      }
+      status = status.toLowerCase();
+    }
+
+    return this.appointmentService.getAppointments(user, status);
   }
 }

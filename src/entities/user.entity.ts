@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { IsNotEmpty, IsEmail, MinLength, IsOptional} from "class-validator";
 import { ClinicalHistory } from "./clinical-history.entity";
+import { Exclude } from "class-transformer";
 
 export type Roles = 'admin' | 'doctor' | 'patient'
 
@@ -30,6 +31,7 @@ export class User {
   @MinLength(10, { message: 'El numero de teléfono debe tener al menos 10 numeros' })
   phone: string;
 
+  @Exclude()
   @Column({ nullable: false })
   @IsNotEmpty({ message: 'La contraseña es obligatoria' })
   @MinLength(6, { message: 'La contraseña debe tener al menos 6 caracteres' })

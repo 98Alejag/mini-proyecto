@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTreatmentDTO } from 'src/dto/create-treatment.dto';
-import { UpdateTeatmentDTO } from 'src/dto/update-treatment.dto';
+import { UpdateTreatmentDTO } from 'src/dto/update-treatment.dto';
 import { Treatment } from 'src/entities/treatment.entity';
 import { ILike, Repository } from 'typeorm';
 
@@ -38,8 +38,8 @@ export class TreatmentService {
     const treatmentCreated = this.treatmentRepo.create(newTreatment);
     return this.treatmentRepo.save(treatmentCreated);
   }
-  async update(id: number, updatedTeatment: UpdateTeatmentDTO) {
-    await this.treatmentRepo.update(id, updatedTeatment);
+  async update(id: number, updatedTreatment: UpdateTreatmentDTO) {
+    await this.treatmentRepo.update(id, updatedTreatment);
     return this.treatmentRepo.findOneBy({ id });
   }
   async disable(id: number): Promise<{ message: string }> {

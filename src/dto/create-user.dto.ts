@@ -33,4 +33,5 @@ export class CreateUserDTO {
 
   @IsNotEmpty({ message: 'La Direccion es obligatoria' })
   address: string;
+
 }

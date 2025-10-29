@@ -18,7 +18,7 @@ export class ClinicalHistory {
   @Column({ nullable: true })
   proposedTreatment?: string;
 
-  // Relation: one history belongs to one patient (user)
+  // Relacion: un usuario (paciente) tiene muchas historias clínicas pero muchas historias clínicas pertenecen a un solo usuario (paciente)
   @ManyToOne(() => User, (user) => user.clinicalHistories, { onDelete: 'CASCADE' })
   patient: User;
 }

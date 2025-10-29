@@ -8,14 +8,20 @@ import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { UpdateAppointmentDTO } from 'src/dto/update-appointment.dto';
 import { UpdateStatusDTO } from 'src/dto/update-status.dto';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-@Controller('appointments')
+@ApiTags('Appointments')
+@ApiBearerAuth()
+@Controller('/api/appointments')
 export class AppointmentController {
   constructor(private readonly appointmentService: AppointmentService) {}
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin', 'doctor', 'patient')
   @Post()
+  @ApiOperation({ summary: 'Crea una nueva cita' })
+  @ApiResponse({ status: 201, description: 'Cita creada exitosamente.' })
+  @ApiResponse({ status: 400, description: 'Solicitud inválida.' })
   async createAppointment(
     @Body() dto: CreateAppointmentDTO,
     @CurrentUser() user: User,
@@ -26,6 +32,9 @@ export class AppointmentController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin', 'doctor', 'patient')
    @Get()
+   @ApiOperation({ summary: 'Obtiene las todas citas, opcionalmente filtradas por estado o por paciente' })
+   @ApiResponse({ status: 200, description: 'Citas obtenidas exitosamente.' })
+   @ApiResponse({ status: 404, description: 'No se encontraron citas.' })
   async getAppointments(
     @CurrentUser() currentUser: User,
     @Query('status') status?: string,
@@ -36,6 +45,10 @@ export class AppointmentController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin', 'doctor', 'patient')
   @Put(':id')
+  @ApiOperation({ summary: 'Actuliza una cita existente'})
+  @ApiResponse({ status: 200, description: 'Cita actualizada correctamente en la BD'})
+  @ApiResponse({ status: 404, description: 'Cita no encontrada en la BD'})
+  @ApiResponse({ status: 400, description: 'No tienes permisos para actualizar esta cita'})
   async updateAppointment(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateAppointmentDTO,
@@ -47,6 +60,10 @@ export class AppointmentController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin', 'doctor')
   @Patch(':id/status')
+  @ApiOperation({ summary: 'Actuliza el estado de una cita existente'})
+  @ApiResponse({ status: 200, description: 'Estado modificado correctamente en la BD'})
+  @ApiResponse({ status: 400, description: 'No tienes permisos para actualizar el estado de esta cita'})
+  @ApiResponse({ status: 404, description: 'Cita no encontrada en la BD'})
   async updateStatus(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateStatusDTO,

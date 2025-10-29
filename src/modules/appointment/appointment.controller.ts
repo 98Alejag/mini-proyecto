@@ -8,7 +8,7 @@ import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { UpdateAppointmentDTO } from 'src/dto/update-appointment.dto';
 import { UpdateStatusDTO } from 'src/dto/update-status.dto';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Appointments')
 @ApiBearerAuth()
@@ -35,6 +35,7 @@ export class AppointmentController {
    @ApiOperation({ summary: 'Obtiene las todas citas, opcionalmente filtradas por estado o por paciente' })
    @ApiResponse({ status: 200, description: 'Citas obtenidas exitosamente.' })
    @ApiResponse({ status: 404, description: 'No se encontraron citas.' })
+   @ApiQuery({ name: 'status', required: false, description: 'Filtrar por estado de la cita (por ejemplo: confirmada, cancelada, pendiente)'})
   async getAppointments(
     @CurrentUser() currentUser: User,
     @Query('status') status?: string,

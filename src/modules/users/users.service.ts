@@ -38,11 +38,22 @@ export class UsersService {
     await this.usersRepo.save(userCreated);
     return{userCreated}
   }
+  
   async update(id: number, updatedUser: UpdateUserDTO) {
-    const hashedPassoword = await bcrypt.hash(updatedUser.password, 10)
-    await this.usersRepo.update(id, {...updatedUser, password: hashedPassoword, role: RolesEnum[updatedUser.role.toUpperCase()]});
-    return this.usersRepo.findOne({ where: { id } });
+  const dataToUpdate = { ...updatedUser };
+  let finalData;
+  
+  if (updatedUser.password) {
+    const hashedPassword = await bcrypt.hash(updatedUser.password, 10);
+    finalData = { ...dataToUpdate, password: hashedPassword };
+  } else { finalData = { ...dataToUpdate }; }
+  if (updatedUser.role) {
+    finalData.role = RolesEnum[updatedUser.role.toUpperCase()]; 
   }
+
+  await this.usersRepo.update(id, finalData);
+  return this.usersRepo.findOne({ where: { id } });
+}
   async disable(id: number): Promise<{ message: string }> {
     const userRemoved = await this.usersRepo.findOne({ where: { id } });
     if (!userRemoved)

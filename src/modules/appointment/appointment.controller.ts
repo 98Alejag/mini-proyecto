@@ -34,7 +34,6 @@ export class AppointmentController {
    @Get()
    @ApiOperation({ summary: 'Obtiene las todas citas, opcionalmente filtradas por estado o por paciente' })
    @ApiResponse({ status: 200, description: 'Citas obtenidas exitosamente.' })
-   @ApiResponse({ status: 404, description: 'No se encontraron citas.' })
    @ApiQuery({ name: 'status', required: false, description: 'Filtrar por estado de la cita (por ejemplo: confirmada, cancelada, pendiente)'})
   async getAppointments(
     @CurrentUser() currentUser: User,

@@ -43,7 +43,7 @@ export class User {
 
   @Column({ nullable: true })
   @IsOptional()
-  age?: number;
+  age: number;
 
   @Column({ default: true })
   status: boolean;

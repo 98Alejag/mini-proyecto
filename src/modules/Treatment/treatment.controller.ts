@@ -25,8 +25,8 @@ export class TreatmentController {
   @ApiOperation({ summary: 'Trae un tratamiento por ID de la BD'})
   @ApiResponse({ status: 200, description: 'Devuelve un tratamiento de la BD'})
   @ApiResponse({ status: 404, description: 'No se encontró el tratamiento en la BD'})
-  findOne(@Param('id') id: string) {
-    return this.treatmentService.findOne(Number(id));
+  findOne(@Param('id', ParseIntPipe) id: number ) {
+    return this.treatmentService.findOne(id);
   }
   
   @Get('search/:name')

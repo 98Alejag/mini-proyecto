@@ -5,7 +5,7 @@ import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { ExecutionContext } from '@nestjs/common';
 import { CreateTreatmentDTO } from 'src/dto/create-treatment.dto';
-import { UpdateTeatmentDTO } from 'src/dto/update-treatment.dto';
+import { UpdateTreatmentDTO } from 'src/dto/update-treatment.dto';
 
 describe('TreatmentController', () => {
   let controller: TreatmentController;
@@ -93,7 +93,7 @@ describe('TreatmentController', () => {
   });
 
   it('should update a treatment', async () => {
-    const dto: UpdateTeatmentDTO = { name: 'Updated' } as any;
+    const dto: UpdateTreatmentDTO = { name: 'Updated' } as any;
     const result = { id: 1, ...dto };
     mockService.update.mockResolvedValue(result);
 

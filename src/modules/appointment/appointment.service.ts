@@ -97,7 +97,7 @@ export class AppointmentService {
         age: patient.age,
         phone: patient.phone,
       },
-      treatment: { id: treatment.id, name: treatment.name },
+      treatment: { id: treatment.id, name: treatment.name, price: treatment.price },
     };
   }
 
@@ -119,7 +119,7 @@ export class AppointmentService {
         status: true,
         doctor: { name: true },
         patient: { name: true, age: true, phone: true },
-        treatment: { id: true, name: true, price: true },
+        treatment: {  name: true, description: true, price: true },
       },
     });
 

@@ -27,6 +27,8 @@
 
 [Docs](http://localhost:3001/api/docs) Documentación en Swagger
 
+[Docs] (https://deepwiki.com/98Alejag/mini-proyecto) Documentación técnica
+
 ## Project setup
 
 ```bash

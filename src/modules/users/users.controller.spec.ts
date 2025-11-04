@@ -5,6 +5,7 @@ import { CreateUserDTO } from 'src/dto/create-user.dto';
 import { UpdateUserDTO } from 'src/dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RolesGuard } from '../auth/roles.guard';
+import { RolesEnum } from 'src/entities/user.entity';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -89,7 +90,7 @@ describe('UsersController', () => {
       age: 25,
       phone: '3124567890',
       address: 'Calle 123',
-      role: 'doctor',
+      role: RolesEnum.DOCTOR,
     };
 
     const result = await controller.update(1, dto);

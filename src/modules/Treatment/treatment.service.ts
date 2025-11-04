@@ -19,7 +19,7 @@ export class TreatmentService {
   async findOne(id: number) {
     const treatmentFind = this.treatmentRepo.findOneBy({ id });
     if (!treatmentFind)
-      throw new NotFoundException(`Treatment with id ${id} not found`);
+      throw new NotFoundException(`Tratamiento con id ${id} no encontrado`);
     return treatmentFind;
   }
   async findByName(name: string): Promise<Treatment[]> {
@@ -28,7 +28,7 @@ export class TreatmentService {
     });
 
     if (treatments.length === 0) {
-      throw new NotFoundException(`No Treatments found with name: ${name}`);
+      throw new NotFoundException(`No se encontraron tratamientos con el nombre: ${name}`);
     }
 
     return  treatments;
@@ -45,9 +45,9 @@ export class TreatmentService {
   async disable(id: number): Promise<{ message: string }> {
     const treatmentRemoved = await this.treatmentRepo.findOne({ where: { id } });
     if (!treatmentRemoved)
-      throw new NotFoundException(`Treatment with id ${id} not found`);
+      throw new NotFoundException(`Tratamiento con id ${id} no encontrado`);
     treatmentRemoved.status = false;
     await this.treatmentRepo.save(treatmentRemoved);
-    return { message: `Treatment with id ${id} disable successfully`}
+    return { message: `Tratamiento con id ${id} deshabilitado exitosamente` }
   }
 }

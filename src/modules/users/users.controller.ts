@@ -35,7 +35,7 @@ export class UsersController {
   @ApiOperation({summary: 'Obtiene el usuario por ID'})
   @ApiResponse({status:200, description:'Usuario encontrado desde DB' })
   @ApiResponse({status:400, description:'Usuario no encontrado en la DB' })
-  findOne(@Param('id',  ) id: number) {
+  findOne(@Param('id', ParseIntPipe ) id: number) {
     return this.usersService.findOne(id);
   }
 

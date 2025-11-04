@@ -1,8 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { IsNotEmpty, IsNumber, IsString, Min, MaxLength } from 'class-validator';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class Treatment {
+  
+  @Exclude()
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -22,6 +25,7 @@ export class Treatment {
   @Min(0, { message: 'El precio no puede ser negativo' })
   price: number;
 
+  @Exclude()
   @Column({ default: true })
   status: boolean;
 }

@@ -60,7 +60,7 @@ export class AppointmentController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin', 'doctor')
   @Patch(':id/status')
-  @ApiOperation({ summary: 'Actuliza el estado de una cita existente'})
+  @ApiOperation({ summary: 'Actualiza el estado de una cita existente'})
   @ApiResponse({ status: 200, description: 'Estado modificado correctamente en la BD'})
   @ApiResponse({ status: 400, description: 'No tienes permisos para actualizar el estado de esta cita'})
   @ApiResponse({ status: 404, description: 'Cita no encontrada en la BD'})

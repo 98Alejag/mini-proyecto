@@ -24,7 +24,7 @@ export class AuthService {
     });
     await this.userRepo.save(userCreated);
     return {
-      message: ' User created successfully',
+      message: 'Usuario creado exitosamente',
       user: { id: userCreated.id, email: userCreated.email },
     };
   }
@@ -33,12 +33,12 @@ export class AuthService {
     const user = await this.userRepo.findOne({ where: { email: data.email } });
 
     if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Credenciales inválidas');
     }
     const isValidPassword = await bcrypt.compare(data.password, user.password);
 
     if (!isValidPassword) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Credenciales inválidas');
     }
 
     const payload = { sub: user.id, name: user.name, email: user.email, role: user.role};

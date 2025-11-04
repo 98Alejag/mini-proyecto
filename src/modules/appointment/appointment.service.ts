@@ -49,6 +49,7 @@ export class AppointmentService {
     const overlapping = await this.appointmentRepo
       .createQueryBuilder('appointment')
       .where('appointment.doctor = :doctorId', { doctorId: dto.doctorId })
+      .andWhere('appointment.status != :canceledStatus', { canceledStatus: 'cancelada' })
       .andWhere('appointment.datehour < :end')
       .andWhere(
         'DATE_ADD(appointment.datehour, INTERVAL appointment.durationMinutes MINUTE) > :start',
@@ -97,7 +98,7 @@ export class AppointmentService {
         age: patient.age,
         phone: patient.phone,
       },
-      treatment: { id: treatment.id, name: treatment.name },
+      treatment: { id: treatment.id, name: treatment.name, price: treatment.price },
     };
   }
 
@@ -119,7 +120,7 @@ export class AppointmentService {
         status: true,
         doctor: { name: true },
         patient: { name: true, age: true, phone: true },
-        treatment: { id: true, name: true, price: true },
+        treatment: {  name: true, description: true, price: true },
       },
     });
 
@@ -153,6 +154,7 @@ export class AppointmentService {
     const overlapping = await this.appointmentRepo
       .createQueryBuilder('appointment')
       .where('appointment.doctor = :doctorId', { doctorId: newDoctorId })
+      .andWhere('appointment.status != :canceledStatus', { canceledStatus: 'cancelada' })
       .andWhere('appointment.datehour < :end')
       .andWhere(
         'DATE_ADD(appointment.datehour, INTERVAL appointment.durationMinutes MINUTE) > :start',

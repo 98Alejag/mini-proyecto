@@ -14,6 +14,7 @@ export enum RolesEnum {
 
 @Entity()
 export class User {
+  @Exclude()
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -37,6 +38,7 @@ export class User {
   @MinLength(6, { message: 'La contraseña debe tener al menos 6 caracteres' })
   password: string;
 
+  @Exclude()
   @Column({ nullable: true })
   @IsNotEmpty({ message: 'La Direccion es obligatoria' })
   address: string;
@@ -45,9 +47,11 @@ export class User {
   @IsOptional()
   age: number;
 
+  @Exclude()
   @Column({ default: true })
   status: boolean;
 
+  @Exclude()
   @Column({default: RolesEnum.PATIENT})
   role: RolesEnum;
 

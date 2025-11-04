@@ -16,7 +16,7 @@ export class UsersService {
   }
   async findOne(id: number) {
     const userFind = await this.usersRepo.findOne({ where: { id } });
-    if (!userFind) throw new NotFoundException(`User with id ${id} not found`);
+    if (!userFind) throw new NotFoundException(`Usuario con id ${id} no encontrado`);
     return userFind;
   }
 
@@ -25,7 +25,7 @@ export class UsersService {
       where: { name: ILike(`%${name}%`)},
     })
     if (users.length === 0) {
-    throw new NotFoundException(`No users found with name: ${name}`);
+    throw new NotFoundException(`No se encontró ningún usuario con el nombre: ${name}`);
   }
 
   return users;
@@ -57,9 +57,9 @@ export class UsersService {
   async disable(id: number): Promise<{ message: string }> {
     const userRemoved = await this.usersRepo.findOne({ where: { id } });
     if (!userRemoved)
-      throw new NotFoundException(`Product with id ${id} not found`);
+      throw new NotFoundException(`Usuario con id ${id} no encontrado`);
     userRemoved.status = false;
     await this.usersRepo.save(userRemoved);
-    return { message: `User with id ${id} disable successfully`}
+    return { message: `Usuario con id ${id} deshabilitado exitosamente` }
   }
 }

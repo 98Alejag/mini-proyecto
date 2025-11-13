@@ -81,7 +81,7 @@ describe('AppointmentService', () => {
     const mockCreated = {
       id: 1,
       datehour: dto.datehour,
-      durationMinutes: dto.durationMinutes,
+      durationMinutes: dto.datehour,
       doctor: mockDoctor,
       patient: mockPatient,
       treatment: mockTreatment,

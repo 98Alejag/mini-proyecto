@@ -17,7 +17,7 @@ export class TreatmentService {
     return this.treatmentRepo.find({ where: { status: true } });
   }
   async findOne(id: number) {
-    const treatmentFind = this.treatmentRepo.findOneBy({ id });
+    const treatmentFind = await this.treatmentRepo.findOne({ where:{ id} });
     if (!treatmentFind)
       throw new NotFoundException(`Tratamiento con id ${id} no encontrado`);
     return treatmentFind;

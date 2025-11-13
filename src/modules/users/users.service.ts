@@ -11,13 +11,13 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepo: Repository<User>,
   ) {}
-  findAll() {
-    return this.usersRepo.find();
+  findAll(): Promise<User[]> {
+    return this.usersRepo.find({where: {status: true}});
   }
   async findOne(id: number) {
-    const userFind = await this.usersRepo.findOne({ where: { id } });
+    const userFind = await this.usersRepo.findOne({ where: { id }, withDeleted: true });
     if (!userFind) throw new NotFoundException(`Usuario con id ${id} no encontrado`);
-    return userFind;
+    return userFind; 
   }
 
   async findByName(name: string): Promise<User[]> {

@@ -14,7 +14,7 @@ export enum RolesEnum {
 
 @Entity()
 export class User {
-  @Exclude()
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -47,11 +47,9 @@ export class User {
   @IsOptional()
   age: number;
 
-  @Exclude()
   @Column({ default: true })
   status: boolean;
 
-  @Exclude()
   @Column({default: RolesEnum.PATIENT})
   role: RolesEnum;
 

@@ -5,7 +5,7 @@ import { Exclude } from 'class-transformer';
 @Entity()
 export class Treatment {
   
-  @Exclude()
+  // @Exclude()
   @PrimaryGeneratedColumn()
   id: number;
 

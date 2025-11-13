@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv'
-import { User } from './src/entities/user.entity';
 import { DataSource } from 'typeorm'
+import { User } from './src/entities/user.entity';
 import { Treatment } from './src/entities/treatment.entity';
 import { Appointment } from './src/entities/appointment.entity';
 import { ClinicalHistory } from './src/entities/clinical-history.entity';

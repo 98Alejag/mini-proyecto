@@ -4,6 +4,8 @@ const ADMIN_HASH = '$2b$10$46LRH3Z7D.j1PruDIgnYvuBdnX7rVAIlobTd2KhJUrG3Q00qC5G3q
 const ADMIN_NAME = 'Administrador';
 const ADMIN_PHONE = '3000000000'; // Cambia por un número real si lo deseas
 const ADMIN_ADDRESS = 'Dirección Admin'; // Opcional, puedes dejarlo vacío o con un valor genérico
+const ADMIN_AGE = '27';
+const ADMIN_ROLE = 'admin';
 
 
 export class SeedAdmin1763757908792 implements MigrationInterface {
@@ -18,8 +20,8 @@ export class SeedAdmin1763757908792 implements MigrationInterface {
         '${ADMIN_NAME}', 
         '${ADMIN_PHONE}', 
         '${ADMIN_ADDRESS}', 
-        NULL, -- Puedes asignar una edad si lo deseas
-        'admin', 
+        '${ADMIN_AGE}', 
+        '${ADMIN_ROLE}', 
         true
       WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = '${ADMIN_EMAIL}');
     `);

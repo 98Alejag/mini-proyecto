@@ -1,7 +1,7 @@
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,7 +14,20 @@ async function bootstrap() {
     .build();
     
   const document = SwaggerModule.createDocument(app, configDoc);
-  SwaggerModule.setup('/api/docs', app, document )  
+  const customOptions: SwaggerCustomOptions = {
+    swaggerOptions: {
+      url: '/api-json'
+    },
+    customCssUrl: [
+      'https://unpkg.com/swagger-ui-dist@5.10.3/swagger-ui.css',
+    ],
+    customJs: [
+      'https://unpkg.com/swagger-ui-dist@5.10.3/swagger-ui-bundle.js',
+      'https://unpkg.com/swagger-ui-dist@5.10.3/swagger-ui-standalone-preset.js',
+    ]
+  }
+
+  SwaggerModule.setup('api/docs', app, document, customOptions)  
 
   app.useGlobalPipes(new ValidationPipe({ 
     whitelist: true, 
